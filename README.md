@@ -479,7 +479,7 @@ List of supported commands:
 | `CreatePlaylist`                | create a new playlist                                                                              | `N`                |
 | `JumpToCurrentTrackInContext`   | jump to the current track in the context                                                           | `g c`              |
 | `JumpToHighlightTrackInContext` | jump to the currently highlighted search result in the context                                     | `C-g`              |
-| `PlaySelected` | start playback of the currently selected album or playlist without opening it | `s` |
+| `PlaySelected` | start playback of the currently selected album or playlist without opening it | `u` |
 
 To add or modify shortcuts, see the [keymaps section](https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps).
 

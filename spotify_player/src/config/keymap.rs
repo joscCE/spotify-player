@@ -334,7 +334,7 @@ impl Default for KeymapConfig {
                     command: Command::OpenLogs,
                 },
                 Keymap {
-                    key_sequence: "s".into(),
+                    key_sequence: "u".into(),
                     command: Command::PlaySelected,
                 },
             ],
