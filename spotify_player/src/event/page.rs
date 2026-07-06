@@ -161,7 +161,7 @@ fn handle_command_for_library_page(
     match focus_state {
         LibraryFocusState::Playlists => {
             let data = state.data.read();
-            Ok(window::handle_command_for_playlist_list_window(
+            window::handle_command_for_playlist_list_window(
                 command,
                 &ui.search_filtered_items(&data.user_data.folder_playlists_items(folder_id))
                     .into_iter()
@@ -169,7 +169,8 @@ fn handle_command_for_library_page(
                     .collect::<Vec<_>>(),
                 &data,
                 ui,
-            ))
+                client_pub,
+            )
         }
         LibraryFocusState::SavedAlbums => {
             // Use a read lock for the function call
@@ -299,12 +300,13 @@ fn handle_key_sequence_for_search_page(
 
             match found_keymap {
                 CommandOrAction::Command(command) => {
-                    Ok(window::handle_command_for_playlist_list_window(
+                    window::handle_command_for_playlist_list_window(
                         command,
                         &playlist_refs,
                         &data,
                         ui,
-                    ))
+                        client_pub,
+                    )
                 }
                 CommandOrAction::Action(action, ActionTarget::SelectedItem) => {
                     window::handle_action_for_selected_item(

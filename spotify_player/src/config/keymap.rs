@@ -1,3 +1,4 @@
+
 use crate::{
     command::{Action, ActionTarget, Command, CommandOrAction},
     key::{Key, KeySequence},
@@ -331,6 +332,10 @@ impl Default for KeymapConfig {
                 Keymap {
                     key_sequence: "g o".into(),
                     command: Command::OpenLogs,
+                },
+                Keymap {
+                    key_sequence: "s".into(),
+                    command: Command::PlaySelect,
                 },
             ],
         }

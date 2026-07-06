@@ -493,6 +493,19 @@ pub fn handle_command_for_album_list_window(
                 state: None,
             });
         }
+        Command::PlaySelect => {
+            client_pub.send(ClientRequest::Player(
+                PlayerRequest::StartPlayback(
+                    Playback::Context(
+                        ContextId::Album(albums[id].id.clone()),
+                        None,
+
+                    ),
+
+                    None,
+                ),
+            ))?;
+        }
         Command::ShowActionsOnSelectedItem => {
             let actions = construct_album_actions(albums[id], data);
             ui.popup = Some(PopupState::ActionList(
@@ -513,15 +526,16 @@ pub fn handle_command_for_playlist_list_window(
     playlists: &[&PlaylistFolderItem],
     data: &DataReadGuard,
     ui: &mut UIStateGuard,
-) -> bool {
+    client_pub: &flume::Sender<ClientRequest>,
+) -> Result<bool> {
     let id = ui.current_page_mut().selected().unwrap_or_default();
     if id >= playlists.len() {
-        return false;
+        return Ok(false);
     }
 
     let count = ui.count_prefix;
     if handle_navigation_command(command, ui.current_page_mut(), id, playlists.len(), count) {
-        return true;
+        return Ok(true);
     }
     match command {
         Command::ChooseSelected => {
@@ -535,7 +549,7 @@ pub fn handle_command_for_playlist_list_window(
                             state.focus = LibraryFocusState::Playlists;
                             state.playlist_folder_id = f.target_id;
                         }
-                        _ => return false,
+                        _ => return Ok(false),
                     }
                 }
                 PlaylistFolderItem::Playlist(p) => {
@@ -548,6 +562,22 @@ pub fn handle_command_for_playlist_list_window(
                 }
             }
         }
+
+
+        Command::PlaySelect => {
+            if let PlaylistFolderItem::Playlist(p) = playlists[id] {
+                client_pub.send(ClientRequest::Player(
+                    PlayerRequest::StartPlayback(
+                        Playback::Context(
+                            ContextId::Playlist(p.id.clone()),
+                            None,
+                        ),
+                        None,
+                    ),
+                ))?;
+            }
+        }
+
         Command::ShowActionsOnSelectedItem => {
             if let PlaylistFolderItem::Playlist(p) = playlists[id] {
                 let actions = construct_playlist_actions(p, data);
@@ -557,9 +587,9 @@ pub fn handle_command_for_playlist_list_window(
                 ));
             }
         }
-        _ => return false,
+        _ => return Ok(false),
     }
-    true
+    Ok(true)
 }
 
 pub fn handle_command_for_show_list_window(
