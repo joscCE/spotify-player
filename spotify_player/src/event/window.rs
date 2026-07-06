@@ -493,7 +493,7 @@ pub fn handle_command_for_album_list_window(
                 state: None,
             });
         }
-        Command::PlaySelect => {
+        Command::PlaySelected => {
             client_pub.send(ClientRequest::Player(
                 PlayerRequest::StartPlayback(
                     Playback::Context(
@@ -564,7 +564,7 @@ pub fn handle_command_for_playlist_list_window(
         }
 
 
-        Command::PlaySelect => {
+        Command::PlaySelected => {
             if let PlaylistFolderItem::Playlist(p) = playlists[id] {
                 client_pub.send(ClientRequest::Player(
                     PlayerRequest::StartPlayback(

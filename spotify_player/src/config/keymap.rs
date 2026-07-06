@@ -335,7 +335,7 @@ impl Default for KeymapConfig {
                 },
                 Keymap {
                     key_sequence: "s".into(),
-                    command: Command::PlaySelect,
+                    command: Command::PlaySelected,
                 },
             ],
         }

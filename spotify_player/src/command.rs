@@ -43,7 +43,7 @@ pub enum Command {
 
     RefreshPlayback,
 
-    PlaySelect,
+    PlaySelected,
 
 
 
@@ -337,7 +337,7 @@ impl Command {
                 "select the last item in a list/table or scroll to the bottom"
             }
             Self::ChooseSelected => "choose the selected item and act on it",
-            Self::PlaySelect => "Play selected item",
+            Self::PlaySelected => "start playback of the selected context without opening it",
             Self::JumpToCurrentTrackInContext => "jump to the current track in the context",
             Self::RefreshPlayback => "manually refresh the current playback",
             Self::ShowActionsOnSelectedItem => "open a popup showing actions on a selected item",
